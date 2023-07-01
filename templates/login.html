@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login V1</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/form.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div class="form-container">
+    <h2 class="form-title">User Login</h2>
+    
+    <form id="signin-form">
+      <input class="form-input" type="text" placeholder="Username" required>
+      <input class="form-input" type="password" placeholder="Password" required>
+      <button class="form-button" type="submit" id='submit_btn'>login</button>
+      <center><img id="loading-anim" src="{{ url_for('static', filename='images/form-loading.svg') }}"></center>
+    </form>
+    
+    <a class="form-link" href="/signup">Not a member? Sign up</a>
+    
+    <a href="https://github.com/adhiraj-ranjan" target="_blank"><img src="https://img.shields.io/badge/Github-adhiraj--ranjan-blue?style=for-the-badge&logo=github">
+  </div>
+  
+  <div id="flash-message" class="flash-message"></div>
+  <script src="{{ url_for('static', filename='scripts/form.js') }}"></script>
+</body>
+</html>

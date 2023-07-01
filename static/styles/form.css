@@ -1,0 +1,103 @@
+/* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #292929;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* form container */
+.form-container {
+    background-color: #333;
+    color: #fff;
+    width: 550px;
+    height: 450px;
+    padding: 40px;
+    justify-content: space-between;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Title styles */
+.form-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Input styles */
+.form-input {
+    width: 100%;
+    padding: 20px;
+    font-size: medium;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 8px;
+    background-color: #444;
+    color: #fff;
+    outline: none;
+}
+
+/* Button styles */
+.form-button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: #7151e6;
+    color: #fff;
+    cursor: pointer;
+    font-size: 17px;
+    transition: background-color 0.3s;
+}
+
+.form-button:hover {
+    background-color: #4024a8;
+}
+
+/* Signup styles */
+.form-link {
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #bbb;
+}
+
+.form-link:hover {
+    color: #fff;
+}
+#loading-anim{
+    display: none;
+    text-align: center;
+}
+
+.flash-message {
+    position: fixed;
+    top: 8px; /* Update the top padding as needed */
+    left: 10px; /* Update the left padding as needed */
+    right: 10px; /* Update the right padding as needed */
+    padding: 20px;
+    text-align: center;
+    background-color: #ffffcc;
+    color: #000;
+    font-size: 18px;
+    border-radius: 8px; /* Add rounded corners */
+    display: none;
+}
+
+@media only screen and (max-width: 600px) {
+    .form-container{
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+}
