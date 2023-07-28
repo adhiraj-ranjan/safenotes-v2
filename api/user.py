@@ -3,18 +3,71 @@ from firebase_admin import credentials
 from firebase_admin import db
 import time
 from uuid import uuid4
-#from os import environ
+from os import environ
 from json import loads
 from base64 import b64decode
 
-CREDS = loads(b64decode("ewogICJ0eXBlIjogInNlcnZpY2VfYWNjb3VudCIsCiAgInByb2plY3RfaWQiOiAic2FmZW5vdGVzLWExM2JlIiwKICAicHJpdmF0ZV9rZXlfaWQiOiAiOWI0MThlMmU1N2M4NTcxM2NkYjkwNDk2ODZmOGFmZmU5ZTIxZDdiZiIsCiAgInByaXZhdGVfa2V5IjogIi0tLS0tQkVHSU4gUFJJVkFURSBLRVktLS0tLVxuTUlJRXZnSUJBREFOQmdrcWhraUc5dzBCQVFFRkFBU0NCS2d3Z2dTa0FnRUFBb0lCQVFESjBJSUUrVGR2cXF3QVxuaCtwaEdPQmFjbDNwcTNkUWQ1a1BXb2xPVEJOZWZtRC9LTFY2elVoYy9qTkFidm1yZFdlLzR0bzZYSlZPa1NqZlxuMnNQYnpnTS9MUVNwaCt3ZkhLOGZHd3B6OVlYdWJTVDNmenhpNXcvbGNOOWJpY3k2ZjEyTXNlTmF4RFJLcExiSlxuZVdCS0pSc09CczA4VncxUXJjT1V3MDJOQVNMbDZiQXBRUnV3U1E5VDF2L1FQYjNBRlZhTVN5azRySjlsZGFzU1xuZlJPVEZBSU5JeHdLYXFDM211TVJmMVRUUExSOGxEUStnWFpFbzY5UTR3b0Ywbi9ZOGNBbWthN3ozNXhYNHdUNlxuV3FPRlJ5OHRlMGt4VE05U3FtSC9yUFJmT3hQcTRuVzJNYWNkOEVHd3dCbkRQcnVNUjUvODc5bHVXaWtHMm1HVlxudFgxalR5aGhBZ01CQUFFQ2dnRUFBYWljcXZNTDV6ZHJRTGxkUGlWTTBiMTdJMXloQjBpbVdjT1VHWkJEUC8xd1xucVdReG9xUGRob01oMDNPZUNuQlZkUlNsbDhGelNqRWorWHdFTEZJc0FXaktyeVNDZHFwL0QzWEN6eHRyV1g5c1xuNUhwWG1oWDlVZFRNeHlVeHFTNDdDL2taemVFTEwzcGRWTGhTUitXNGJGUDJ1NXBaRGdyUmpzOVFtN293eWR3dlxuTXkyTlN2aTBmUDJ6KzZiR1pNd2xlVjBBM1VkbHNlOVFsNHlCZDdLYUp4ZGlwMXErUWN0dnBzSUdLYmlJSEc5UlxuazNDZ2dyWFE5MkJYZWl5K3VaY1dQUVMwTWh3ckM4Mmxxb2cvSTQ1Q3AwNkhrOUZoOVp0YVBBbXpTZmorQmR1Ulxua1l4Y09VYjVtTHhZdWhCV2JGZXNYalJqOXRMMVRLLzJscFdXd1hqcEFRS0JnUUQwR2RTVm1xdDRJUDJVSUxNU1xuaCtFM3dOOW5VZE81TnY0Y0hhSXJ3cWhyNFZhUmQzWHh2aWNRWjlYVU5Mc2tUemdUUWUwdmRDNGtyOTIxVllMblxuUE1UN0N6a3lSQTEzaFNpVnIwbUo1YWJFdmMvY05Pb1RzbklWS2cvd3d2UWVpQTM5bHZ0K0xoTC9PRGVWWGFTSFxudzFKc2VheVRsRHZFYTFvNDZsYXh4cUE1SVFLQmdRRFRwdnExQWZPaTNtVTUyWm04MUg1ZmpDalA5M29JYkNGbVxuZ05iYm1RUTVWdHFCVDVMbWNpUnFxVmRRMndNb2RsbHpSQ0hCc1hnLytpc2dSK0ZndVVHMFhNaTdDWmh4QUVPQ1xuWmNpWTZscUNTWTlSOTVlbm5BZ2lXVDBXeHZwLzB4S0haTzhZTFdEcDk4SWFrZVJhVVBaS0ZsdjNnYUpJK01UaVxuZTZPTXlUakhRUUtCZ1FEQlBNV09uVC9LdklzaHZYVWxZVTRJWGZZOUM0a0pZYUJ1VDRNM0UwVlRDYk1ITzBPeVxuV084QnpNRjQyVG1nOTltVFhTaFAzYkE5dUw5UnN0MExBNCtJa1F6NVh1Z3VTc3FqSEgyaDNaeFV1VktZcDRiNlxuaXRSSEx1SXBuWnUxbzgwM2lGT1ZReElrMnJNZDJtREtYUFNlRFFCeVgvR2tmN3VQdk90ZWxyZjJJUUtCZ0d4VFxuejRlcmF3NldNMHNybzNNeGMwam1ETkY4Z2JvajFlaUgwdkJzWGV3WEZ4a09LRXJJYXZrb21TY3FJWENwT2xrelxucXU5ZkxRUFp3QTd5bTFrTkdLTCt4a0pzdzlnNllWTXhVejFvM1ZCSDVCSDQzbWNNQm1IR09PMGFoSVc5KzRMT1xuMTAwUmxNUExhazU5RTFwaWk5d1ptNUtQaUFjL1JFNERLQTlid2pMQkFvR0JBT2RYRVBUemR3cGZJYzNvVmp1TlxuL1VHZ21Ja2Y3QWlnaXh0dHI2VWNjeEUyUWo5ZWVjbzZMdGg2N21DM3NsOEFHVW1sTkl2c0loTXN2eWx3UEg0dFxuRmc3N05ZMkZWWVFJUU05cEFkREsvRm5hMkVWR25HcVBJUE56RXVsTVlTS2hic25VZjF3TjNjRW4xNGVFeENjWlxuZ1pURlUzUllvQXBkbE5KcTlobFdyd0VoXG4tLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tXG4iLAogICJjbGllbnRfZW1haWwiOiAiZmlyZWJhc2UtYWRtaW5zZGstZGFleGFAc2FmZW5vdGVzLWExM2JlLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwKICAiY2xpZW50X2lkIjogIjEwMDY4MTkwNjE5MzA5MTI2MTEzMCIsCiAgImF1dGhfdXJpIjogImh0dHBzOi8vYWNjb3VudHMuZ29vZ2xlLmNvbS9vL29hdXRoMi9hdXRoIiwKICAidG9rZW5fdXJpIjogImh0dHBzOi8vb2F1dGgyLmdvb2dsZWFwaXMuY29tL3Rva2VuIiwKICAiYXV0aF9wcm92aWRlcl94NTA5X2NlcnRfdXJsIjogImh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL29hdXRoMi92MS9jZXJ0cyIsCiAgImNsaWVudF94NTA5X2NlcnRfdXJsIjogImh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL3JvYm90L3YxL21ldGFkYXRhL3g1MDkvZmlyZWJhc2UtYWRtaW5zZGstZGFleGElNDBzYWZlbm90ZXMtYTEzYmUuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLAogICJ1bml2ZXJzZV9kb21haW4iOiAiZ29vZ2xlYXBpcy5jb20iCn0K").decode())
+CREDS = loads(b64decode(environ['CREDS_ENCODED']).decode())
 
 cred = credentials.Certificate(CREDS)
 firebase_admin.initialize_app(cred, {
-    "databaseURL":"https://safenotes-a13be-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    "databaseURL": environ['DATABASE_URL']
     }
 )
 
 user = db.reference("/users")
 token = db.reference("/tokens")
 
+def token_to_uname(sToken):
+    tokens = token.get()
+    if sToken in tokens.keys():
+        return tokens[sToken]
+    else:
+        return False
+
+
+def validate_user(uname, passwd):
+    if uname in user.get().keys():
+        if passwd == user.child(uname).get()['password']:
+            sessionToken = str(uuid4())
+            token.update({sessionToken: uname})
+            return {"authenticated": True, "response": "logged in", "authtoken": sessionToken}
+        else:
+            return {"authenticated": False, "response": "Password is incorrect"}
+    else:
+        return {"authenticated": False, "response": "User not found"}
+
+def new_user(uname, passwd):
+    if uname not in user.get().keys():
+        user.update({uname: {"password": passwd, "id": int(time.time()), "last_viewed": "story"}})
+        create_note(fname="story", uname=uname)
+        update_note(fname="story", data="             It was a dark and stormy night...", uname=uname)
+        return {"created": True, "response": "signup success, redirecting to login page..."}
+    else:
+        return {"created": False, "response": "Username already taken"}
+
+def get_note_titles(uname=None):
+    noteTls = user.child(uname).child("notes").get()
+    if not noteTls:
+        return []
+    else:
+        return noteTls.keys()
+    
+
+def create_note(fname, uname=None):
+    if not uname:
+        return {"created": False, "response": "Note was not created"}
+
+    if fname not in get_note_titles(uname=uname):
+        user.child(uname).child("notes").update({fname: ""})
+        return {"created": True}
+    else:
+        return {"created": False, "response": "Note with the name already exists"}
+    
+
+def update_note(fname, data, uname=None):
+    if not uname:
+        return {"status": "fail", "response": "note was not saved"}
+    
+    user.child(uname).child("notes").update({fname: data})
+    return {"status": "ok", "response": "note updated"}

@@ -27,42 +27,57 @@ function toggle_loading_anim(){
         button.style.display = "block"
     }
 }
+const signInForm = document.getElementById('signin-form');
+if (signInForm){
+    signInForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        toggle_loading_anim();
 
-document.getElementById('signin-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    toggle_loading_anim();
+        const username = event.target.elements[0].value;
+        const password = event.target.elements[1].value;
 
-    const username = event.target.elements[0].value;
-    const password = event.target.elements[1].value;
+        send_post_req("api/signin", {"username": username, "password": password})
+            .then(response => {
+                if (response['authenticated']){
+                    setCookie("token", response['authtoken'], 365);
+                    location.reload();
+                }else{
+                    showFlashMessage(response['response']);
+                    toggle_loading_anim();
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                toggle_loading_anim();
+            });
+    });
+}
 
-    send_post_req("api/signin", {"username": username, "password": password})
-        .then(response => {
-            console.log(response);
-            toggle_loading_anim();
-        })
-        .catch(error => {
-            console.error(error);
-            toggle_loading_anim();
-        });
-});
+const signUpForm = document.getElementById('signup-form');
 
-document.getElementById('signup-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    toggle_loading_anim();
+if (signUpForm){
+    signUpForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        toggle_loading_anim();
 
-    const username = event.target.elements[0].value;
-    const password = event.target.elements[1].value;
+        const username = event.target.elements[0].value;
+        const password = event.target.elements[1].value;
 
-    send_post_req("api/signup", {"username": username, "password": password})
-        .then(response => {
-            console.log(response);
-            toggle_loading_anim();
-        })
-        .catch(error => {
-            console.error(error);
-            toggle_loading_anim();
-        });
-});
+        send_post_req("api/signup", {"username": username, "password": password})
+            .then(response => {
+                showFlashMessage(response['response']);
+                if (response['created']){
+                    window.location.href = "/";
+                }else{
+                    toggle_loading_anim();
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                toggle_loading_anim();
+            });
+    });
+}
 
 function send_post_req(endpoint, data){
     return fetch(endpoint, {
