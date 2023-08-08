@@ -1,1 +1,7 @@
 api/__pycache__
+poetry.lock
+pyproject.toml
+venv/
+.breakpoints
+.replit
+replit.nix
