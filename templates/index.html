@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeNotes</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/index.css') }}">
+</head>
+
+<body>
+
+    <div class="sidebar">
+
+        <!-- main sidebar-->
+        <div class="tools-sidebar">
+
+            <!-- upper navigation tools-->
+            <div class="upper-nav-tools">
+
+                <!-- create note icon-->
+                <div class="create-icon" onclick="enable_create_input()">
+                    <img src="{{ url_for('static', filename='images/create.svg') }}" alt="create">
+                </div>
+
+                <!-- view notes icon-->
+                <div class="notes-icon" onmouseenter="showNotesSidebar()" onclick="closeNotesSidebar()">
+                    <img src="{{ url_for('static', filename='images/apps.svg') }}" alt="notes">
+                </div>
+
+                <!-- save note icon-->
+                <div class="save-icon disabled" onclick="save_data()">
+                    <img src="{{ url_for('static', filename='images/save.svg') }}" alt="save">
+                </div>
+
+                <!-- delete note icon-->
+                <div class="delete-icon disabled" onclick="delete_note()">
+                    <img src="{{ url_for('static', filename='images/delete.svg') }}" alt="delete">
+                </div>
+            </div>
+
+            <div class="lower-nav-tools">
+                <!-- processing svg anim-->
+                <div class="processing-icon" title="processing">
+                    <img src="{{ url_for('static', filename='images/processing.svg') }}" alt="processing">
+                </div>
+                
+                <!-- logout button-->
+                <div class="logout-icon" title="logout" onclick="logoutFunc()">
+                    <img src="{{ url_for('static', filename='images/logout.svg') }}" alt="logout">
+                </div>
+            </div>
+        
+        </div>
+
+        
+        <div>
+            
+            <p id="note-name">...</p>
+
+            <!-- notes sidebar-->
+            <div id="notes-sidebar" class="notes-sidebar">
+                <ul>
+                    <input class="create-input" onsubmit="create_note()">
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+    <textarea title="notes-data-container" id="text-area" cols="110" oninput="addStarToName()"></textarea>
+
+    <div id="flash-message" class="flash-message"></div>
+
+    <script src="{{ url_for('static', filename='scripts/index.js') }}"></script>
+</body>
+
+</html>

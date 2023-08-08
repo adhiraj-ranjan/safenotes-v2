@@ -36,7 +36,7 @@ if (signInForm){
         const username = event.target.elements[0].value;
         const password = event.target.elements[1].value;
 
-        send_post_req("api/signin", {"username": username, "password": password})
+        send_post_req("api/__signin", {"username": username, "password": password})
             .then(response => {
                 if (response['authenticated']){
                     setCookie("token", response['authtoken'], 365);
@@ -63,7 +63,7 @@ if (signUpForm){
         const username = event.target.elements[0].value;
         const password = event.target.elements[1].value;
 
-        send_post_req("api/signup", {"username": username, "password": password})
+        send_post_req("api/__signup", {"username": username, "password": password})
             .then(response => {
                 showFlashMessage(response['response']);
                 if (response['created']){

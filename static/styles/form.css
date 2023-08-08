@@ -30,7 +30,8 @@ body {
 /* Title styles */
 .form-title {
     font-size: 24px;
-    margin-bottom: 20px;
+    color: #c4c7c5;
+    margin-bottom: 22px;
     text-align: center;
 }
 
@@ -53,7 +54,7 @@ body {
     padding: 15px;
     border: none;
     border-radius: 8px;
-    background-color: #7151e6;
+    background-color: #0f537d;
     color: #fff;
     cursor: pointer;
     font-size: 17px;
@@ -61,7 +62,7 @@ body {
 }
 
 .form-button:hover {
-    background-color: #4024a8;
+    background-color: #5c459c;
 }
 
 /* Signup styles */

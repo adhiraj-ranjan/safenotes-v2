@@ -1,0 +1,196 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    background-color: #1f1f1f;
+    display: flex;
+}
+
+.sidebar {
+    display: flex;
+}
+
+.tools-sidebar {
+    width: 80px;
+    /* Adjust the width as per your requirement */
+    height: 100vh;
+    background-color: #2d2f31;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 2px solid transparent;
+    z-index: 2;
+    transition: border-right 0.3s ease;
+}
+
+
+.create-icon,
+.logout-icon,
+.notes-icon,
+.save-icon,
+.delete-icon {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    transition: background-color 0.3s ease;
+}
+
+.processing-icon {
+    display: none;
+    justify-content: center;
+    padding: 20px;
+}
+
+.logout-icon:hover,
+.create-icon:hover,
+.notes-icon:hover,
+.save-icon:hover,
+.delete-icon:hover {
+    background-color: #383a3c;
+}
+
+
+.disabled{
+    opacity: 0.3;
+    cursor: unset;
+    pointer-events: none;
+}
+
+.tools-sidebar.logout-trigger {
+    border-right: 2px solid #3498db;
+}
+
+.tools-sidebar.notes-trigger {
+    border-right: 1px solid #fff;
+}
+
+img {
+    width: 35px;
+    /* Adjust the icon size as needed */
+    height: 35px;
+}
+
+.flash-message {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 20px;
+    text-align: center;
+    width: 230px;
+    background-color: #0f537d;
+    color: #c4c7c5;
+    font-size: 18px;
+    border-radius: 8px;
+    font-size: larger;
+    display: none;
+}
+
+.notes-sidebar {
+    position: relative;
+    display: flex;
+    width: 250px;
+    height: 100vh;
+    left: -250px;
+    background-color: #2d2f31;
+    border-radius: 0 18px 18px 0;
+    z-index: 1;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    transition: left 0.3s ease;
+}
+
+
+.notes-sidebar::-webkit-scrollbar {
+    width: 2px;
+    background-color: transparent;
+}
+
+.notes-sidebar::-webkit-scrollbar-thumb {
+    background-color: #000;
+}
+
+.notes-sidebar.show {
+    left: 0;
+}
+
+.notes-sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.notes-sidebar ul li {
+    width: 200px;
+    color: #c4c7c5;
+    padding: 18px 15px 18px 15px;
+    font-size: medium;
+    font-family: sans-serif;
+    border: none;
+    border-radius: 30px;
+    margin: 0 10px 0px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.notes-sidebar ul li:hover {
+    background-color: #383a3c;
+}
+
+.notes-sidebar ul li.active {
+    background-color: #0f537d;
+}
+
+textarea {
+    padding: 20px;
+    margin: 50px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    resize: none;
+    color: #c4c7c5;
+    background-color: #28292a;
+    /* Change the background color */
+}
+
+/* Style for textarea when focused */
+textarea:focus {
+    outline: none;
+    /* Remove default focus outline */
+    border-color: #66afe9;
+    box-shadow: 0 0 5px #66afe9;
+}
+
+/* Placeholder color */
+::placeholder {
+    color: #ccc;
+}
+
+#note-name{
+    position: absolute;
+    width: 200px;
+    font-size:x-large;
+    font-family: monospace;
+    margin: 50px 25px 0 25px;
+    border-radius: 10px;
+    background-color: #e7ddf7;
+    padding: 20px;
+}
+
+.create-input{
+    justify-content: center;
+    height: 0;
+    padding: 0;
+    border: none;
+    width: 190px;
+    border-radius: 5px;
+    font-size: large;
+    margin: 0 25px 10px 25px;
+    transition: height 0.3s ease;
+}
+
+.create-input.active{
+    height: 30px;
+    padding: 2px 5px 2px 5px;
+}
