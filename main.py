@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify, make_response, send_from_directory
 from api import user
+from waitress import serve
 
 app = Flask(__name__)
 
@@ -115,4 +116,5 @@ def return_favicon():
     return send_from_directory("static/images/", "favicon.ico")
 
 if __name__ == "__main__":
-    app.run("0.0.0.0", debug=True)
+    serve(app, host="0.0.0.0")
+
