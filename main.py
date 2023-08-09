@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, make_response
+from flask import Flask, render_template, request, jsonify, make_response, send_from_directory
 from api import user
 
 app = Flask(__name__)
@@ -109,6 +109,10 @@ def create_project():
         return user.create_note(file_name, user.token_to_uname(token))
     except Exception as e:
         return make_response(jsonify({"created": False, "response": str(e)}), 400)
+
+@app.route("/favicon.ico")
+def return_favicon():
+    return send_from_directory("static/images/", "favicon.ico")
 
 if __name__ == "__main__":
     app.run("0.0.0.0", debug=True)

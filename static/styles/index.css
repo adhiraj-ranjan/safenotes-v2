@@ -53,7 +53,7 @@ html {
 }
 
 
-.disabled{
+.disabled {
     opacity: 0.3;
     cursor: unset;
     pointer-events: none;
@@ -167,10 +167,12 @@ textarea:focus {
     color: #ccc;
 }
 
-#note-name{
+#note-name {
     position: absolute;
     width: 200px;
-    font-size:x-large;
+    max-height: 200px;
+    overflow-y: scroll;
+    font-size: x-large;
     font-family: monospace;
     margin: 50px 25px 0 25px;
     border-radius: 10px;
@@ -178,7 +180,26 @@ textarea:focus {
     padding: 20px;
 }
 
-.create-input{
+/* Hide the scrollbar */
+#note-name::-webkit-scrollbar {
+    width: 0;
+    /* Make the scrollbar width zero */
+    height: 0;
+    /* Make the scrollbar height zero */
+}
+
+/* Optionally, style the track and thumb */
+#note-name::-webkit-scrollbar-track {
+    background: transparent;
+    /* Set the track's background color */
+}
+
+#note-name::-webkit-scrollbar-thumb {
+    background: transparent;
+    /* Set the thumb's background color */
+}
+
+.create-input {
     justify-content: center;
     height: 0;
     padding: 0;
@@ -190,7 +211,7 @@ textarea:focus {
     transition: height 0.3s ease;
 }
 
-.create-input.active{
+.create-input.active {
     height: 30px;
     padding: 2px 5px 2px 5px;
 }
