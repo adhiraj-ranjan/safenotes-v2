@@ -88,13 +88,13 @@ function addEventListenerToLi(liElement, fname) {
 // fetch note titles
 const ulElement = document.querySelector('.notes-sidebar ul');
 
-function createLi(text, inserBefore=false){
+function createLi(text, inserBefore = false) {
     const liElement = document.createElement('li');
     liElement.textContent = text;
     addEventListenerToLi(liElement, text); // adding eventlister to each li
-    if (!inserBefore){
+    if (!inserBefore) {
         ulElement.appendChild(liElement);
-    }else{
+    } else {
         ulElement.insertBefore(liElement, ulElement.children[1]);
     }
     return liElement;
@@ -121,7 +121,7 @@ fetch('/api/__get_titles')
         console.error('Error fetching data:', error);
     });
 
-function getLiFromName(name){
+function getLiFromName(name) {
     return Array.from(document.querySelectorAll('li')).find(li => li.textContent === name);
 }
 
@@ -191,16 +191,16 @@ function logoutFunc() {
 function handleKeyCombination(e) {
     // Check if Ctrl (or Cmd on macOS) key is pressed
     if (e.ctrlKey || e.metaKey) {
-        if (e.key === 's'){
+        if (e.key === 's') {
             e.preventDefault();
             save_data();
         }
-        else if(e.key === 'b'){
+        else if (e.key === 'b') {
             e.preventDefault();
             notesIcon.click();
         }
     }
-    
+
 }
 
 // Attach the keys event listener to the document
@@ -241,17 +241,17 @@ function interceptFetchRequests() {
 interceptFetchRequests();
 
 
-function addStarToName(){
+function addStarToName() {
     noteName.textContent = textArea.title + "*";
 }
 
-function removeStarFromName(){
+function removeStarFromName() {
     noteName.textContent = textArea.title;
 }
 
 // handle note deletion
-function delete_note() {
-    if (window.confirm("Are you sure? delete '" + textArea.title + "'")){
+async function delete_note() {
+    if (await confirmDialog("Are you sure? delete '" + textArea.title + "'")) {
         fetch("/api/__delete_note", {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
@@ -263,14 +263,13 @@ function delete_note() {
                 showFlashMessage(responseJson['response']);
                 if (!responseJson['deleted']) {
                     logoutFunc();
-                }else{
+                } else {
                     getLiFromName(textArea.title).remove();
                     textArea.value = "";
                     textArea.title = "";
                     noteName.textContent = "...";
-                    disable_note_interactions();
                 }
-                
+
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -282,12 +281,12 @@ function delete_note() {
 const saveBtn = document.querySelector(".save-icon");
 const deleteBtn = document.querySelector(".delete-icon");
 
-function disable_note_interactions(){
+function disable_note_interactions() {
     saveBtn.classList.add("disabled");
     deleteBtn.classList.add("disabled");
 }
 
-function enable_note_interactions(){
+function enable_note_interactions() {
     saveBtn.classList.remove("disabled");
     deleteBtn.classList.remove("disabled");
 }
@@ -295,9 +294,9 @@ function enable_note_interactions(){
 // handle note creation
 //const createBtn = document.querySelector(".create-icon");
 const createInput = document.querySelector(".create-input")
-function enable_create_input(){
+function enable_create_input() {
     //createInput.style.display = "flex";
-    if (!notesSidebar.classList.contains("show")){
+    if (!notesSidebar.classList.contains("show")) {
         notesIcon.click();
     }
     createInput.classList.add("active");
@@ -305,7 +304,7 @@ function enable_create_input(){
 
 }
 
-function disable_create_input(){
+function disable_create_input() {
     createInput.classList.remove("active");
     //createInput.style.display = "none";
 }
@@ -317,18 +316,18 @@ function create_note() {
     fetch("/api/__create_note", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ "name": nName})
+        body: JSON.stringify({ "name": nName })
     }).then(response => {
         return response.json();
     })
         .then(responseJson => {
             showFlashMessage(responseJson['response']);
-            if (responseJson['created']){
-                createLi(nName, insertBefore=true).click();
+            if (responseJson['created']) {
+                createLi(nName, insertBefore = true).click();
                 disable_create_input();
-            }else if(responseJson['response'].includes("exists")){
+            } else if (responseJson['response'].includes("exists")) {
                 pass
-            }else{
+            } else {
                 logoutFunc();
             }
         })
@@ -338,8 +337,37 @@ function create_note() {
 }
 
 
-createInput.addEventListener("keydown", function(event) {
+createInput.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
-      create_note();
+        create_note();
     }
-  });
+});
+
+
+// handle dialog box render
+
+const customDialogTitle = document.getElementById("customDialogTitle");
+const customOverlay = document.getElementById("customOverlay");
+const customCancelButton = document.getElementById("customCancelButton");
+const customOkButton = document.getElementById("customOkButton");
+
+function confirmDialog(title) {
+    disable_note_interactions();
+
+    customDialogTitle.textContent = title;
+
+    return new Promise((resolve) => {
+        customOverlay.style.display = "flex";
+
+        customCancelButton.addEventListener("click", function () {
+            customOverlay.style.display = "none";
+            resolve(false);
+            enable_note_interactions();
+        });
+
+        customOkButton.addEventListener("click", function () {
+            customOverlay.style.display = "none";
+            resolve(true);
+        });
+    });
+}

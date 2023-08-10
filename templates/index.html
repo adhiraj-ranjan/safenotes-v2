@@ -44,18 +44,18 @@
                 <div class="processing-icon" title="processing">
                     <img src="{{ url_for('static', filename='images/processing.svg') }}" alt="processing">
                 </div>
-                
+
                 <!-- logout button-->
                 <div class="logout-icon" title="logout" onclick="logoutFunc()">
                     <img src="{{ url_for('static', filename='images/logout.svg') }}" alt="logout">
                 </div>
             </div>
-        
+
         </div>
 
-        
+
         <div>
-            
+
             <p id="note-name">...</p>
 
             <!-- notes sidebar-->
@@ -71,7 +71,21 @@
 
     <textarea title="notes-data-container" id="text-area" cols="110" oninput="addStarToName()"></textarea>
 
+    <!-- The overlay and dialog box -->
+    <div class="overlay" id="customOverlay">
+        <div class="dialog-box">
+            <h2 id="customDialogTitle"></h2>
+            <div class="custom-btn-container">
+                <button id="customCancelButton">Cancel</button>
+                <button id="customOkButton">OK</button>
+            </div>
+        </div>
+    </div>
+
+
     <div id="flash-message" class="flash-message"></div>
+
+
 
     <script src="{{ url_for('static', filename='scripts/index.js') }}"></script>
 </body>
