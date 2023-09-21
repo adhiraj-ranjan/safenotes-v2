@@ -111,7 +111,7 @@ fetch('/api/__get_titles')
             logoutFunc();
         } else {
             responseJson['response'].forEach(title => {
-                createLi(title);
+                createLi(decodeURIComponent(title));
             });
             get_logs_and_update_text();
         }
@@ -325,6 +325,7 @@ function create_note() {
             if (responseJson['created']) {
                 createLi(nName, insertBefore = true).click();
                 disable_create_input();
+                textArea.focus()
             } else if (responseJson['response'].includes("exists")) {
                 pass
             } else {

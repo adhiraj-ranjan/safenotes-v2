@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>SafeNotes</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/index.css') }}">
 </head>
@@ -69,7 +70,7 @@
 
     </div>
 
-    <textarea title="notes-data-container" id="text-area" cols="110" oninput="addStarToName()"></textarea>
+    <textarea title="notes-data-container" id="text-area" cols="110"     oninput="addStarToName()"></textarea>
 
     <!-- The overlay and dialog box -->
     <div class="overlay" id="customOverlay">

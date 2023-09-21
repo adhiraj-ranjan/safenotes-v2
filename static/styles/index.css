@@ -266,3 +266,19 @@ textarea:focus {
     max-height: 200px;
     overflow-y: scroll;
 }
+#customDialogTitle::-webkit-scrollbar {
+    display: none; /* This will hide the scrollbar */
+  }
+
+
+@media only screen and (max-width: 767px) {
+
+    .tools-sidebar{
+        display: none;
+    }
+
+    .notes-sidebar{
+        display: none;
+    }
+
+  }
