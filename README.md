@@ -2,6 +2,10 @@
 
 Welcome to SafeNotes, a user-friendly and open-source web application designed to streamline your note-taking experience while prioritizing your data security. Our platform offers a seamless interface that enables you to effortlessly create, access, and edit notes. With robust authentication measures in place, your valuable notes remain safeguarded and private.
 
+## work under progress
+
+- [ ] Responsive for mobile devices
+
 ## Experience SafeNotes
 Explore the power of SafeNotes with our ready-to-use instance: [SafeNotes Instance](https://safenotes.itertools.repl.co)
 
